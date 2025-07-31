@@ -1,4 +1,4 @@
-import os
+ï»¿import os
 import csv
 import time
 import requests
@@ -49,6 +49,7 @@ def login():
     print("Login successful.")
 
 # ========== SCRAPE ASSETS ==========
+
 def scrape_assets():
     driver.get(ASSETS_URL)
     time.sleep(5)
@@ -63,37 +64,58 @@ def scrape_assets():
         print(f"Scraping page {page}...")
 
         asset_rows = driver.find_elements(By.CSS_SELECTOR, "table tbody tr")
-
         if not asset_rows:
             print("No assets found on this page.")
             break
 
         for row in asset_rows:
             try:
-                # Image and title via img tag
+                # Grab image and title
                 img_elem = row.find_element(By.CSS_SELECTOR, "img")
                 img_url = img_elem.get_attribute("src")
                 title = img_elem.get_attribute("alt").strip()
 
-                # Remaining text columns (td)
+                # Safe filename
+                filename = re.sub(r'[\\/*?:"<>|]', "_", title) + ".jpg"
+                img_path = os.path.join("images", filename)
+                full_img_path = os.path.join(IMAGES_DIR, filename)
+
+                # Table columns
                 tds = row.find_elements(By.TAG_NAME, "td")
                 category = tds[2].text.strip() if len(tds) > 2 else ""
                 tags = tds[3].text.strip() if len(tds) > 3 else ""
                 custodian = tds[4].text.strip() if len(tds) > 4 else ""
                 location = tds[5].text.strip() if len(tds) > 5 else ""
 
-                # Save image
-                filename = safe_filename(title) + ".jpg"
-                img_path = os.path.join("images", filename)
-                full_img_path = os.path.join(IMAGES_DIR, filename)
+                # Open detail page in new tab
+                title_link = row.find_element(By.CSS_SELECTOR, "a[href*='/assets/']")
+                asset_url = title_link.get_attribute("href")
+                driver.execute_script("window.open(arguments[0]);", asset_url)
+                driver.switch_to.window(driver.window_handles[-1])
+                time.sleep(3)
 
+                # Scrape description
+                try:
+                    desc_elem = driver.find_element(By.CSS_SELECTOR, "div.whitespace-pre-wrap.text-gray-600")
+                    description = desc_elem.text.strip()
+                except:
+                    description = ""
+
+                # Save debug detail page if needed
+                # with open(f"debug_asset_{title}.html", "w", encoding="utf-8") as f:
+                #     f.write(driver.page_source)
+
+                driver.close()
+                driver.switch_to.window(driver.window_handles[0])
+
+                # Download image
                 if img_url and "https" in img_url:
                     with open(full_img_path, 'wb') as f:
                         f.write(requests.get(img_url).content)
 
                 assets.append({
                     "title": title,
-                    "description": "",
+                    "description": description,
                     "categories": category,
                     "tags": tags.replace(",", ";"),
                     "location": location,
@@ -105,11 +127,21 @@ def scrape_assets():
                 print(f"Error parsing row: {e}")
                 continue
 
-        # Stop here for now — no pagination support yet
-        break
+        # Pagination
+        try:
+            next_button = driver.find_element(By.XPATH, "//button[@aria-label='Go to next page']")
+            is_disabled = next_button.get_attribute("disabled")
+            if is_disabled:
+                print("Reached last page.")
+                break
+            driver.execute_script("arguments[0].click();", next_button)
+            page += 1
+            time.sleep(5)
+        except Exception as e:
+            print(f"No next button found or error clicking it: {e}")
+            break
 
     return assets
-
 
 
 # ========== WRITE CSV ==========
