@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\MASTER\\code\\shelf_scraper\\shelf-scraper\\",
+  "WorkspaceRootPath": "D:\\MASTER\\github\\shelf_scraper\\shelf-scraper\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F43D6DC6-48BF-40E7-8D3C-878F8612490C}|shelf-scraper.pyproj|D:\\MASTER\\code\\shelf_scraper\\shelf-scraper\\shelf_scraper.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{F43D6DC6-48BF-40E7-8D3C-878F8612490C}|shelf-scraper.pyproj|D:\\MASTER\\github\\shelf_scraper\\shelf-scraper\\shelf_scraper.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{F43D6DC6-48BF-40E7-8D3C-878F8612490C}|shelf-scraper.pyproj|solutionrelative:shelf_scraper.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "shelf_scraper.py",
-              "DocumentMoniker": "D:\\MASTER\\code\\shelf_scraper\\shelf-scraper\\shelf_scraper.py",
+              "DocumentMoniker": "D:\\MASTER\\github\\shelf_scraper\\shelf-scraper\\shelf_scraper.py",
               "RelativeDocumentMoniker": "shelf_scraper.py",
-              "ToolTip": "D:\\MASTER\\code\\shelf_scraper\\shelf-scraper\\shelf_scraper.py",
+              "ToolTip": "D:\\MASTER\\github\\shelf_scraper\\shelf-scraper\\shelf_scraper.py",
               "RelativeToolTip": "shelf_scraper.py",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAFYAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-07-30T22:42:31.426Z",
               "EditorCaption": ""

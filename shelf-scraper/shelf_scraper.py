@@ -12,8 +12,8 @@ def safe_filename(name):
     return re.sub(r'[\\/*?:"<>|]', "_", name)
 
 # ========== CONFIG ==========
-EMAIL = "cbig78222@gmail.com"
-PASSWORD = "sh3lfS067@fhoq"
+EMAIL = ""
+PASSWORD = ""
 HEADLESS = False  # Set to True for headless mode
 
 OUTPUT_DIR = "migration_output"
